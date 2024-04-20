@@ -1,46 +1,35 @@
 # learn-gradio
 
-
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Yoshida24/learn-gradio)
 
-Preset for development on Python using venv.
+gradioを学習するためのRepositoryです。
 
-**included:**
-- Lint and Format
-- Task runner
-- Env support
+> ref. https://www.gradio.app/
 
-## Usage
 
-depends on:
+## 環境
+
+- OS: Sonoma 14.4
 - Python: 3.11
 - pip: 24.0
 - GNU Make: 3.81
-
-support:
-- OS: M1 Macbook Air Sonoma 14.4
+- Machine: M1 Macbook Air
 
 
-## Gettig Started
-First of all, install VSCode recommended extensions. This includes Linter, Formatter, and so on. Recommendation settings is written on `.vscode/extensions.json`.
+## 開発を始める
 
-Then, make virtual env and activate it:
+**セットアップp**
 
 ```bash
+# Make virtual env
 python -m venv .venv
 . .venv/bin/activate
-```
 
-Install dependencies:
-
-```bash
+# install dependencies
 pip install --upgrade pip
 pip install -r requirements.txt
-```
 
-To use environment variables in `.env` file, run below script to create `.env`
-
-```bash
+# To use environment variables in .env file, run below script to create .env
 if [ ! -f .env ]; then
     cp .env.sample .env
     echo 'Info: .env file has successfully created. Please rewrite .env file'
@@ -49,39 +38,42 @@ else
 fi
 ```
 
-Now you can run script:
+**`src/main.py`を開発モードで起動する**
+> Note:
+> 開発モードではホットリロードが有効になり、スクリプトの保存の都度、自動的にサーバーがリロードされます。
 
 ```bash
-# load environment variables from .env to your shell.
-set -a && source ./.env && set +a
+make dev
+```
+
+**`src/main.py`を起動する**
+
+```bash
 make run
 ```
 
-> **Note**
->
-> This project *does not* depends on `dotenv-python`. Instead, using below script.
-> `set -a && source ./.env && set +a`
 
-## Jupyter
+## Useful Commands
+
+**Use JupyterLab**
 
 ```bash
 jupyter lab
 ```
 
-## Develop App
-On usual develop, first you activate `venv` first like below.
+**Activate `venv`**
 
 ```bash
 source .venv/bin/activate
 ```
 
-Save requirements:
+**Save requirements**
 
 ```bash
 pip freeze > requirements.txt
 ```
 
-Deactivate venv:
+**Deactivate venv**
 
 ```bash
 deactivate

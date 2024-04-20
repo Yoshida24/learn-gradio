@@ -1,10 +1,17 @@
-from modules.cowsay_demo.greeting import greet_to, greet_from_env
+from modules.cowsay.greeting import say_message
+
+import gradio as gr
+import dotenv
+
+dotenv.load_dotenv()
 
 
-def main():
-    # use argument to greet
-    greet_to(your_name="Alan")
+demo = gr.Interface(
+    fn=say_message,
+    inputs=["text", "slider"],
+    outputs=["text"],
+    title="Cowsay App",
+    description="Enter your message to receive a cow's message!",
+)
 
-
-if __name__ == "__main__":
-    main()
+demo.launch(share=True)

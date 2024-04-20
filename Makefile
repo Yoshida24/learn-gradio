@@ -1,3 +1,8 @@
+.PHONY: dev
+dev:
+	@echo "Starting Development Proccess..."
+	bash scripts/dev.sh
+
 .PHONY: run
 run:
 	@echo "Running..."
