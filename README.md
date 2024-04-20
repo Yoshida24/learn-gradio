@@ -1,6 +1,6 @@
 # preset-python-venv
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Yoshida24/preset-python-venv)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Yoshida24/learn-gradio)
 
 Preset for development on Python using venv.
 
