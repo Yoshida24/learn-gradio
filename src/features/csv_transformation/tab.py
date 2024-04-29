@@ -31,7 +31,7 @@ def on_load_csv_file(file):
 def on_convert_csv_button_clicked(df):
     converted_df = transform_csv(df)
     preview_data = converted_df
-    filepath = directory_util.create_csv_file(
+    filepath = directory_util.create_csv_file_and_path(
         converted_df,
         filepath=f"tmp/output_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv",
     )
