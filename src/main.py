@@ -13,4 +13,4 @@ with gr.Blocks() as demo:
     cowsay_tab(gr)
 
 
-demo.launch(share=True)
+demo.launch(share=False)
