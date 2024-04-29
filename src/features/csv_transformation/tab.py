@@ -1,18 +1,10 @@
 import pandas as pd
 import json
 
-from pathlib import Path
 from datetime import datetime
 import time
 
-
-def create_csv_file(df, filepath) -> str:
-    # パスが存在しない場合はディレクトリを作成
-    Path(filepath).parent.mkdir(exist_ok=True)
-    # データフレームをCSV形式で保存
-    df.to_csv(filepath, index=False)
-    # pathを計算し返す
-    return filepath
+from modules.util import directory_util
 
 
 def transform_csv(df) -> pd.DataFrame:
@@ -33,17 +25,17 @@ def on_load_csv_file(file):
     df = pd.read_csv(file)
     full_data = df
     preview_data = df
-    return (full_data, preview_data)
+    return [full_data, preview_data]
 
 
-def on_convert_csv_button_clicked(
-    df, filepath=f"tmp/output_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv"
-):
+def on_convert_csv_button_clicked(df):
     converted_df = transform_csv(df)
-    full_data = converted_df
     preview_data = converted_df
-    filepath = create_csv_file(converted_df, filepath)
-    return (preview_data, filepath)
+    filepath = directory_util.create_csv_file(
+        converted_df,
+        filepath=f"tmp/output_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv",
+    )
+    return [preview_data, filepath]
 
 
 def csv_transformation_tab(gr):
@@ -53,15 +45,20 @@ def csv_transformation_tab(gr):
         input_data_df = gr.Dataframe(visible=False)
 
         # UIの定義
-        gr.Markdown("CSVファイルにJSON列を追加したデータを作成し、DLします。")
+        with gr.Row():
+            gr.Markdown("CSVファイルにJSON列を追加したデータを作成し、DLします。")
         with gr.Row():
             with gr.Column():
                 gr.Markdown("### 入力")
-                # CSVファイルをアップロードするための入力インターフェース
-                file_input = gr.File(label="CSVファイルをアップロード")
-
-                # JSONプロフィールを追加するボタン
-                convert_csv_button = gr.Button("CSVファイルを変換(JSONを各行に追加)")
+                with gr.Row():
+                    with gr.Column():
+                        # CSVファイルをアップロードするための入力インターフェース
+                        file_input = gr.File(label="CSVファイルをアップロード")
+                    with gr.Column():
+                        # JSONプロフィールを追加するボタン
+                        convert_csv_button = gr.Button(
+                            "CSVファイルを変換(JSONを各行に追加)"
+                        )
 
                 # 入力CSVプレビュー
                 gr.Markdown("### 入力プレビュー")
@@ -80,7 +77,7 @@ def csv_transformation_tab(gr):
         # CSVファイルアップロードのハンドラ
         file_input.change(
             on_load_csv_file,
-            inputs=file_input,
+            inputs=[file_input],
             outputs=[
                 input_data_df,
                 input_table_with_json_preview,
